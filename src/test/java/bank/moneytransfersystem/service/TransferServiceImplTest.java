@@ -236,7 +236,6 @@ class TransferServiceImplTest {
         verify(transferRepository, times(1)).deleteById(1L);
     }
 
-
     @Test
     void deleteTransfer_ShouldThrowNotFoundException_WhenTransferDoesNotExist() {
         when(transferRepository.findById(1L)).thenReturn(Optional.empty());
