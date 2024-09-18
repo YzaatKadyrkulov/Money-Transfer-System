@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Transfer Search Results</title>
+</head>
+<body>
+<h1>Transfer Search Results</h1>
+<p>Showing transfers from <strong th:text="${startDate}">Start Date</strong> to <strong th:text="${endDate}">End Date</strong></p>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>From Cash</th>
+        <th>To Cash</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="transfer : ${transfers}">
+        <td th:text="${transfer.id}"></td>
+        <td th:text="${transfer.fromCash.id}"></td>
+        <td th:text="${transfer.toCash.id}"></td>
+        <td th:text="${transfer.amount}"></td>
+        <td th:text="${transfer.status}"></td>
+        <td th:text="${transfer.createdAt}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/transfer/{cashId}">Back to Transfers</a>
+</body>
+</html>

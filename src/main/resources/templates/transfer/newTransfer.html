@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Transfer</title>
+    <style>
+        .card {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .card h1 {
+            text-align: center;
+        }
+        .card p {
+            margin: 10px 0;
+        }
+        .card label {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        .card input, .card select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .card button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .card button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>Create Transfer</h1>
+    <form th:method="POST" th:action="@{/transfer/{cashId}/save(cashId=${cashId})}" th:object="${newTransfer}">
+
+        <!-- From Cash (hidden) -->
+        <input type="hidden" th:field="*{fromCash.id}" value="${newTransfer.fromCash.id}" />
+
+        <p>
+            <label for="amount">Amount:</label>
+            <input type="number" th:field="*{amount}" id="amount" required="required" placeholder="Enter transfer amount" />
+        </p>
+        <p>
+            <label for="currency">Currency:</label>
+            <select th:field="*{currency}" id="currency" required="required">
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="KGS">KGS</option>
+                <option value="RUB">RUB</option>
+            </select>
+        </p>
+
+        <!-- To Cash -->
+        <p>
+            <label for="toCash">To Cash:</label>
+            <select th:field="*{toCash.id}" id="toCash" required="required">
+                <option value="" disabled selected>Select destination cash</option>
+                <option th:each="cash : ${cashList}" th:value="${cash.id}" th:text="${cash.cashName}"></option>
+            </select>
+        </p>
+
+        <p>
+            <label for="senderFullName">Sender Full Name:</label>
+            <input type="text" th:field="*{senderFullName}" id="senderFullName" required="required" placeholder="Enter sender's full name" />
+        </p>
+        <p>
+            <label for="receiverFullName">Receiver Full Name:</label>
+            <input type="text" th:field="*{receiverFullName}" id="receiverFullName" required="required" placeholder="Enter receiver's full name" />
+        </p>
+        <p>
+            <label for="senderPhoneNumber">Sender Phone Number:</label>
+            <input type="text" th:field="*{senderPhoneNumber}" id="senderPhoneNumber" required="required" placeholder="Enter sender's phone number" />
+        </p>
+        <p>
+            <label for="receiverPhoneNumber">Receiver Phone Number:</label>
+            <input type="text" th:field="*{receiverPhoneNumber}" id="receiverPhoneNumber" required="required" placeholder="Enter receiver's phone number" />
+        </p>
+        <p>
+            <label for="comment">Comment:</label>
+            <input type="text" th:field="*{comment}" id="comment" placeholder="Enter comment (optional)" />
+        </p>
+        <p>
+            <button type="submit">Save Transfer</button>
+        </p>
+    </form>
+</div>
+</body>
+</html>
