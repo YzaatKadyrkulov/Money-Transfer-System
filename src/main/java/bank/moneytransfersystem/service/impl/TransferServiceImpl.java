@@ -106,7 +106,8 @@ public class TransferServiceImpl implements TransferService {
     @Override
     public void deleteTransfer(Long transferId) throws NotFoundException {
         log.info("Deleting transfer with ID: {}", transferId);
-        Transfer transfer = findTransferById(transferId);
+        Transfer transfer = transferRepository.findById(transferId)
+                .orElseThrow(() -> new NotFoundException("Transfer not found"));
         transferRepository.delete(transfer);
         log.info("Deleted transfer with ID: {}", transferId);
     }

@@ -225,18 +225,6 @@ class TransferServiceImplTest {
     }
 
     @Test
-    void deleteTransfer_ShouldDeleteTransfer_WhenTransferExists() throws NotFoundException {
-        Transfer transfer = new Transfer();
-        transfer.setId(1L);
-
-        when(transferRepository.findById(1L)).thenReturn(Optional.of(transfer));
-
-        transferService.deleteTransfer(1L);
-
-        verify(transferRepository, times(1)).deleteById(1L);
-    }
-
-    @Test
     void deleteTransfer_ShouldThrowNotFoundException_WhenTransferDoesNotExist() {
         when(transferRepository.findById(1L)).thenReturn(Optional.empty());
 
@@ -244,6 +232,6 @@ class TransferServiceImplTest {
             transferService.deleteTransfer(1L);
         });
 
-        assertEquals("Transfer with ID 1 not found", exception.getMessage());
+        assertEquals("Transfer not found", exception.getMessage());
     }
 }

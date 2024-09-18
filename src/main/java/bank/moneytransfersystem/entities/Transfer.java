@@ -2,7 +2,6 @@ package bank.moneytransfersystem.entities;
 
 import bank.moneytransfersystem.enums.Currency;
 import bank.moneytransfersystem.enums.Status;
-import bank.moneytransfersystem.validation.PhoneNumberValidation;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,9 +25,7 @@ public class Transfer extends BaseEntity {
     private Status status;
     private String senderFullName;
     private String receiverFullName;
-    @PhoneNumberValidation
     private String senderPhoneNumber;
-    @PhoneNumberValidation
     private String receiverPhoneNumber;
     private String comment;
     private LocalDateTime createdAt;
