@@ -1,1 +1,1 @@
-web: java -jar target/Money-Transfer-System.jar
+web: java -Dserver.port=$PORT -jar target/Money-Transfer-System.jar
