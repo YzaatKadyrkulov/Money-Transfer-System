@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/Money-Transfer-System.jar
+web: java -jar target/Money-Transfer-System.jar
