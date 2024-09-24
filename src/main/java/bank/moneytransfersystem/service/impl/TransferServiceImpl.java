@@ -31,12 +31,6 @@ public class TransferServiceImpl implements TransferService {
     public String createTransfer(Long cashId, Transfer transfer) throws NotFoundException, IllegalArgumentException {
         log.info("Creating transfer with details: cashId={}, transfer={}", cashId, transfer);
 
-        Cash cash = cashRepository.findById(cashId)
-                .orElseThrow(() -> {
-                    log.error("Cash with ID {} not found", cashId);
-                    return new NotFoundException("Cash with ID " + cashId + " not found");
-                });
-
         if (transfer.getFromCash() == null || transfer.getToCash() == null) {
             log.error("FromCash or ToCash is null in transfer: {}", transfer);
             throw new IllegalArgumentException("FromCash or ToCash must not be null");
@@ -162,11 +156,13 @@ public class TransferServiceImpl implements TransferService {
 
     @Override
     public List<Transfer> findByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+        log.debug("startDate: {}, endDate: {}", startDate, endDate);
         return transferRepository.findByDateRange(startDate, endDate);
     }
 
     @Override
     public List<Transfer> findTransfers(LocalDateTime fromDate, LocalDateTime toDate, String comment) {
+        log.debug("fromDate: {}, toDate: {}, comment: {},", fromDate, toDate, comment);
         return transferRepository.findTransfersByCriteria(fromDate, toDate, comment);
     }
 
