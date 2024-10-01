@@ -8,8 +8,8 @@ import java.util.List;
 
 @Repository
 public interface CashRepository extends JpaRepository<Cash, Long> {
-    boolean existsByCashName(String cashName);
+//    boolean existsByCashName(String cashName);
 
-    List<Cash> findByCashName(String name);
+//    List<Cash> findByCashName(String name);
 }
 

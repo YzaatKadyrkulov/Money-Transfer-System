@@ -31,6 +31,12 @@ public class TransferServiceImpl implements TransferService {
     public String createTransfer(Long cashId, Transfer transfer) throws NotFoundException, IllegalArgumentException {
         log.info("Creating transfer with details: cashId={}, transfer={}", cashId, transfer);
 
+        Cash cash = cashRepository.findById(cashId)
+                .orElseThrow(() -> {
+                    log.error("Cash with ID {} not found", cashId);
+                    return new NotFoundException("Cash with ID " + cashId + " not found");
+                });
+
         if (transfer.getFromCash() == null || transfer.getToCash() == null) {
             log.error("FromCash or ToCash is null in transfer: {}", transfer);
             throw new IllegalArgumentException("FromCash or ToCash must not be null");
@@ -75,10 +81,11 @@ public class TransferServiceImpl implements TransferService {
     @Override
     public Transfer getTransferByCode(String code) throws NotFoundException {
         log.info("Fetching transfer with code: {}", code);
-        Transfer transfer = transferRepository.findByCode(code)
-                .orElseThrow(() -> new NotFoundException("Transfer with code " + code + " not found"));
-        log.info("Fetched transfer: {}", transfer);
-        return transfer;
+//        Transfer transfer = transferRepository.findByCode(code)
+//                .orElseThrow(() -> new NotFoundException("Transfer with code " + code + " not found"));
+//        log.info("Fetched transfer: {}", transfer);
+//        return transfer;
+        return new Transfer();
     }
 
     @Override
@@ -108,43 +115,44 @@ public class TransferServiceImpl implements TransferService {
 
     public void processTransfer(String code) throws NotFoundException, IllegalArgumentException {
         log.info("Processing transfer with code: {}", code);
-        Transfer transfer = transferRepository.findByCode(code)
-                .orElseThrow(() -> new NotFoundException("Transfer with code " + code + " not found"));
+//        Transfer transfer = transferRepository.findByCode(code)
+//                .orElseThrow(() -> new NotFoundException("Transfer with code " + code + " not found"));
+//
+//        if (transfer.getFromCash() == null || transfer.getToCash() == null) {
+//            log.error("Source or destination cash is not specified in transfer: {}", transfer);
+//            throw new IllegalArgumentException("Source or destination cash is not specified");
+//        }
 
-        if (transfer.getFromCash() == null || transfer.getToCash() == null) {
-            log.error("Source or destination cash is not specified in transfer: {}", transfer);
-            throw new IllegalArgumentException("Source or destination cash is not specified");
-        }
+//        Cash fromCash = transfer.getFromCash();
+//        Cash toCash = transfer.getToCash();
+//        double amount = transfer.getAmount();
 
-        Cash fromCash = transfer.getFromCash();
-        Cash toCash = transfer.getToCash();
-        double amount = transfer.getAmount();
+//        if (fromCash.getBalance() < amount) {
+//            log.error("Insufficient balance in source cash: {} for transfer amount: {}", fromCash, amount);
+//            throw new IllegalArgumentException("Insufficient balance in source cash");
+//        }
 
-        if (fromCash.getBalance() < amount) {
-            log.error("Insufficient balance in source cash: {} for transfer amount: {}", fromCash, amount);
-            throw new IllegalArgumentException("Insufficient balance in source cash");
-        }
+//        log.debug("Before transfer: fromCash balance = {}, toCash balance = {}", fromCash.getBalance(), toCash.getBalance());
 
-        log.debug("Before transfer: fromCash balance = {}, toCash balance = {}", fromCash.getBalance(), toCash.getBalance());
+//        fromCash.setBalance(fromCash.getBalance() - amount);
+//        toCash.setBalance(toCash.getBalance() + amount);
 
-        fromCash.setBalance(fromCash.getBalance() - amount);
-        toCash.setBalance(toCash.getBalance() + amount);
+//        cashRepository.save(fromCash);
+//        cashRepository.save(toCash);
 
-        cashRepository.save(fromCash);
-        cashRepository.save(toCash);
+//        log.debug("After transfer: fromCash balance = {}, toCash balance = {}", fromCash.getBalance(), toCash.getBalance());
 
-        log.debug("After transfer: fromCash balance = {}, toCash balance = {}", fromCash.getBalance(), toCash.getBalance());
-
-        transfer.setStatus(Status.ISSUED);
-        transferRepository.save(transfer);
+//        transfer.setStatus(Status.ISSUED);
+//        transferRepository.save(transfer);
     }
 
     @Override
     public List<Transfer> findAllTransfers(Long cashId) {
         log.info("Fetching all transfers for cashId: {}", cashId);
-        List<Transfer> transfers = transferRepository.findAllTransfers(cashId);
-        log.info("Fetched {} transfers", transfers.size());
-        return transfers;
+//        List<Transfer> transfers = transferRepository.findAllTransfers(cashId);
+//        log.info("Fetched {} transfers", transfers.size());
+//        return transfers;
+        return List.of();
     }
 
     @Override
@@ -157,13 +165,15 @@ public class TransferServiceImpl implements TransferService {
     @Override
     public List<Transfer> findByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
         log.debug("startDate: {}, endDate: {}", startDate, endDate);
-        return transferRepository.findByDateRange(startDate, endDate);
+//        return transferRepository.findByDateRange(startDate, endDate);
+        return List.of();
     }
 
     @Override
     public List<Transfer> findTransfers(LocalDateTime fromDate, LocalDateTime toDate, String comment) {
         log.debug("fromDate: {}, toDate: {}, comment: {},", fromDate, toDate, comment);
-        return transferRepository.findTransfersByCriteria(fromDate, toDate, comment);
+//        return transferRepository.findTransfersByCriteria(fromDate, toDate, comment);
+        return List.of();
     }
 
     public Transfer findTransferById(Long transferId) throws NotFoundException {

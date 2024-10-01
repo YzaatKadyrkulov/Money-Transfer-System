@@ -29,17 +29,17 @@ public class CashServiceImpl implements CashService {
             throw new IllegalArgumentException("Cash object must not be null");
         }
 
-        if (cashRepository.existsByCashName(cash.getCashName())) {
-            log.error("Cash with name '{}' already exists", cash.getCashName());
-            throw new AlreadyExistsException("Cash with name '" + cash.getCashName() + "' already exists");
-        }
+//        if (cashRepository.existsByCashName(cash.getCashName())) {
+//            log.error("Cash with name '{}' already exists", cash.getCashName());
+//            throw new AlreadyExistsException("Cash with name '" + cash.getCashName() + "' already exists");
+//        }
 
-        if (cash.getBalance() < 1000) {
-            log.info("Balance is below minimum threshold. Setting balance to 1000.0");
-            cash.setBalance(1000.0);
-        }
-        cashRepository.save(cash);
-        log.info("Successfully saved cash: {}", cash);
+//        if (cash.getBalance() < 1000) {
+//            log.info("Balance is below minimum threshold. Setting balance to 1000.0");
+//            cash.setBalance(1000.0);
+//        }
+//        cashRepository.save(cash);
+//        log.info("Successfully saved cash: {}", cash);
     }
 
     @Override
@@ -66,10 +66,10 @@ public class CashServiceImpl implements CashService {
 
     @Override
     public List<Cash> findByCashName(String name) {
-        log.info("Finding Cash by name: {}", name);
-        List<Cash> result = cashRepository.findByCashName(name);
-        log.info("Found {} Cash entries with name '{}'", result.size(), name);
-        return result;
+//        log.info("Finding Cash by name: {}", name);
+//        List<Cash> result = cashRepository.findByCashName(name);
+//        log.info("Found {} Cash entries with name '{}'", result.size(), name);
+        return List.of();
     }
 
     @Override
